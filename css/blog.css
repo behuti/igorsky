@@ -3,7 +3,7 @@
  */
 
  body {
-  font-family: Georgia, "Times New Roman", Times, serif;
+  font-family: 'Roboto', sans-serif;
   color: #555;
 }
 
@@ -42,6 +42,16 @@ h6, .h6 {
 }
 
 /* Nav links */
+
+.blog-nav li {
+  position: relative;
+  display: inline-block;
+  padding: 10px;
+  font-weight: 500;
+}
+.blog-nav li a {
+  color: #fff;
+}
 .blog-nav-item {
   position: relative;
   display: inline-block;
@@ -54,6 +64,7 @@ h6, .h6 {
   color: #fff;
   text-decoration: none;
 }
+
 
 /* Active state gets a caret at the bottom */
 .blog-nav .active {
