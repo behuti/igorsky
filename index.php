@@ -6,9 +6,9 @@
 					get_template_part( 'content', get_post_format() );
 				endwhile;?>
 					<nav>
-						<ul class="pager">
-							<li><?php next_posts_link( 'Previous' ); ?></li>
-							<li><?php previous_posts_link( 'Next' ); ?></li>
+						<ul class="pagination">
+							<li class="page-item"><?php next_posts_link( 'Previous' ); ?></li>
+							<li class="page-item"><?php previous_posts_link( 'Next' ); ?></li>
 						</ul>
 					</nav>
 				<?php
