@@ -9,7 +9,7 @@
 
   add_action( 'wp_enqueue_scripts', 'mandatory_scripts' );
 
-  // Google fonts
+  // Link Google fonts
   function link_google_fonts() {
     wp_enqueue_style('Roboto', 'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
   }
@@ -64,3 +64,11 @@
   }
   
   add_action( 'admin_init', 'custom_settings_page_setup' );
+
+  //Add Bootstrap class to next_posts and previous_posts
+  function posts_link_attributes() {
+    return 'class="page-link"';
+  }
+
+  add_filter('next_posts_link_attributes', 'posts_link_attributes');
+  add_filter('previous_posts_link_attributes', 'posts_link_attributes');
