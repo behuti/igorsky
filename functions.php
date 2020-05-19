@@ -33,6 +33,7 @@
 
 
   // Menus
+
   register_nav_menus( 
     array(
       'top-menu' => 'Top Menu Location',
@@ -41,53 +42,10 @@
     )
   );
 
+  // Custom Image Sizes
 
-
-  // Create Custom Global Settings
-  function igorsky_settings_page() {
-    ?>
-      <div class="wrap">
-        <h1>Igorsky Options</h1>
-        <form method="post" action="options.php">
-            <?php
-                settings_fields("social-settings");
-                do_settings_sections("theme-options");      
-                submit_button(); 
-            ?>          
-        </form>
-      </div>
-    <?php
-  }
-
-  function add_theme_menu_item() {
-    add_menu_page("Igorsky Options", "Igorsky Options", "manage_options", "igorsky-options", "igorsky_settings_page", null, 99);
-  }
-
-  add_action("admin_menu", "add_theme_menu_item");
-
-  // Social Media Links
-  function setting_twitter() {  ?>
-      <input type="text" name="twitter" id="twitter" value="<?php echo get_option( 'twitter' ); ?>" />
-  <?php }
-  function setting_github() { ?>
-    <input type="text" name="github" id="github" value="<?php echo get_option('github'); ?>" />
-  <?php }
-  function setting_facebook() { ?>
-    <input type="text" name="facebook" id="facebook" value="<?php echo get_option('facebook'); ?>" />
-  <?php }
-
-  function custom_settings_page_setup() {
-    add_settings_section( 'social-settings', 'Social Settings', null, 'theme-options' );
-    add_settings_field( 'twitter', 'Twitter URL', 'setting_twitter', 'theme-options', 'social-settings' );
-    add_settings_field( 'github', 'Github URL', 'setting_github', 'theme-options', 'social-settings' );
-    add_settings_field( 'facebook', 'Facebook URL', 'setting_facebook', 'theme-options', 'social-settings' );
-  
-    register_setting('social-settings', 'twitter');
-    register_setting('social-settings', 'github');
-    register_setting('social-settings', 'facebook');
-  }
-  
-  add_action( 'admin_init', 'custom_settings_page_setup' );
+  add_image_size( 'blog-large', 800, 600, false );
+  add_image_size( 'blog-small', 300, 200, true );
 
   //Add Bootstrap class to next_posts and previous_posts
   function posts_link_attributes() {
@@ -99,3 +57,44 @@
 
   // WpBakery Page Builder Activation
   vc_set_as_theme();
+
+
+// WpBakery Page Builder Addons
+  // Barfiller
+  add_shortcode( 'ig-barfiller', 'ig_barfiller_callback' );
+  add_action( 'wp_enqueue_scripts', 'barfiller_scripts' );
+
+  function barfiller_scripts() {
+    wp_enqueue_style( 'Barfiller', get_template_directory_uri() . '/third-party-plugins/barfiller/barfiller.css' );
+    wp_enqueue_script( 'Barfiller', get_template_directory_uri() . '/third-party-plugins/barfiller/barfiller.js', array('jquery'), false, true );
+    wp_enqueue_script( 'BarfillerInstance', get_template_directory_uri() . '/third-party-plugins/barfiller/plugin.js', array('jquery', 'Barfiller'), false, true );
+  }
+
+  function ig_barfiller_callback($atts) {
+    $atts = shortcode_atts( array(
+
+      'title'=> 'undefined',
+      'color'=> '#000',
+      'duration'=> 500,
+      'tooltip'=> false,
+      'percent'=> 50
+
+    ), $atts );
+
+    ob_start();
+
+    ?>
+
+    <div class="barfill-container" data-options='{"barColor":"<?php echo $atts['color'];?>","duration":"<?php echo $atts['duration'];?>","tooltip":"<?php echo $atts['tooltip'];?>"}'>
+      <h3><?php echo $atts["title"];?></h3>
+      <div id="bar" class="barfiller">
+        <div class="tipWrap">
+          <span class="tip"></span>
+        </div>
+        <span class="fill" data-percentage="<?php echo $atts['percent'];?>"></span>
+      </div>
+    </div>
+    <?php
+    $output = ob_get_clean();
+    return $output;
+  }

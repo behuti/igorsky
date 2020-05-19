@@ -2,7 +2,7 @@
 <div class="blog-post">
 
 		<?php if( has_post_thumbnail(  ) ):?>
-				<img src="<?php the_post_thumbnail_url(); ?>" alt="<?php the_title(); ?>" class="img-fluid mb-4">
+			<img src="<?php the_post_thumbnail_url('blog-large'); ?>" alt="<?php the_title(); ?>" class="img-fluid mb-4">
 		<?php endif;?>
 
 		<h2 class="blog-post-title"><?php the_title(); ?></h2>
