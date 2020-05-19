@@ -2,9 +2,15 @@
 
   // Mandatory styles and scripts
   function mandatory_scripts() {
-    wp_enqueue_style( 'Bootstrap', get_template_directory_uri(  ) . '/css/bootstrap.min.css', array(), '4.4.1' );
-    wp_enqueue_style( 'Blog', get_template_directory_uri(  ) . '/css/blog.css' );
-    wp_enqueue_script( 'Bootstrap', get_template_directory_uri(  ) . '/js/bootstrap.bundle.min.js', array( 'jquery' ), '4.4.1', true );
+    // styles
+    wp_register_style( 'Bootstrap', get_template_directory_uri(  ) . '/css/bootstrap.min.css', array(), '4.4.1' );
+    wp_enqueue_style( 'Bootstrap' );
+
+    wp_register_style( 'Main', get_template_directory_uri(  ) . '/css/main.css' );
+    wp_enqueue_style( 'Main' );
+    // scripts
+    wp_register_script( 'Bootstrap', get_template_directory_uri(  ) . '/js/bootstrap.bundle.min.js', array( 'jquery' ), '4.4.1', true );
+    wp_enqueue_script( 'Bootstrap' );
   }
 
   add_action( 'wp_enqueue_scripts', 'mandatory_scripts' );
@@ -16,8 +22,26 @@
 
   add_action( 'wp_print_styles', 'link_google_fonts' );
 
+  // Theme Options
+
   // WordPress Titles
   add_theme_support( 'title-tag' );
+
+  // Menus Support
+  add_theme_support( 'menus' );
+  add_theme_support( 'post-thumbnails' );
+
+
+  // Menus
+  register_nav_menus( 
+    array(
+      'top-menu' => 'Top Menu Location',
+      'mobile-menu' => 'Mobile Menu Location',
+      'gooter-menu' => 'Footer Menu Location',
+    )
+  );
+
+
 
   // Create Custom Global Settings
   function igorsky_settings_page() {
@@ -72,3 +96,6 @@
 
   add_filter('next_posts_link_attributes', 'posts_link_attributes');
   add_filter('previous_posts_link_attributes', 'posts_link_attributes');
+
+  // WpBakery Page Builder Activation
+  vc_set_as_theme();

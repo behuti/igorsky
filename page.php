@@ -1,11 +1,9 @@
-<?php get_header(); ?>
-	<div class="row">
-		<div class="col-sm-12">
-			<?php
-				if ( have_posts() ) : while ( have_posts() ) : the_post();
-					get_template_part( 'content', get_post_format() );
-				endwhile; endif;
-			?>
-		</div> <!-- /.blog-main -->
-	</div> <!-- /.row -->
-<?php get_footer(); ?>
+<?php get_header();?>
+<section class="page-wrap">
+  <div class="container">
+    <h1><?php the_title();?></h1>
+  
+    <?php get_template_part( 'includes/section', 'content' );?>
+  </div>
+</section>
+<?php get_footer();?>
